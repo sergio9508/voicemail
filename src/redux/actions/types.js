@@ -1,0 +1,4 @@
+export const GET_VOICEMAIL = "GET_VOICEMAIL";
+export const CLEAN_VOICEMAIL = "CLEAN_VOICEMAIL";
+export const POST_VOICEMAIL = "POST_VOICEMAIL";
+export const LOADING_POST = "LOADING POST";
