@@ -3,6 +3,7 @@ import {
   CLEAN_VOICEMAIL,
   POST_VOICEMAIL,
   LOADING_POST,
+  LOADING,
 } from "redux/actions/types";
 
 const serverUrl = "https://sandbox.2600hz.com:8443/v2";
@@ -17,8 +18,6 @@ const account_id = "4642e64040cdb8b89c310a21a07c7f62";
 const box_id = "b37675a2d7b90d60f0ee5d4175502394";
 
 export const getVoicemail = () => (dispatch) => {
-  console.log("im here");
-
   fetch(`${requestUrl}accounts/${account_id}/vmboxes/${box_id}/messages`, {
     headers,
   }).then((response) => {

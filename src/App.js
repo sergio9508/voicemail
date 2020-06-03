@@ -4,15 +4,24 @@ import { Container, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   app:{
-    marginTop: "2em"
+    height: "100vh",
+    background: "#fff",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  title:{
+    textAlign: "center",
+    color: "#000"
   }
 })
 
 function App() {
   const classes = useStyles();
   return (
-    <div className="App">
-      <Container maxWidth="lg" className={classes.app}>
+    <div className="App" className={classes.app}>
+      <Container maxWidth="lg">
+        <h1 className={classes.title}>VOICEMAIL LIST</h1>
         <VoicemailTable></VoicemailTable>
       </Container>
     </div>

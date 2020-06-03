@@ -1,7 +1,8 @@
-import { GET_VOICEMAIL, CLEAN_VOICEMAIL, POST_VOICEMAIL, LOADING_POST } from "redux/actions/types";
+import { GET_VOICEMAIL, CLEAN_VOICEMAIL, POST_VOICEMAIL, LOADING_POST, LOADING } from "redux/actions/types";
 const initialState = {
   data: [],
-  post: false
+  post: false,
+  loading: "true"
 };
 
 export default function (state = initialState, action) {
@@ -10,12 +11,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         data: action.data.data,
+        loading: false
       };
-
     case LOADING_POST:
       return{
         ...state,
-        post: true
+        post: true,
       }
     case POST_VOICEMAIL:
       return{
