@@ -2,4 +2,4 @@ export const GET_VOICEMAIL = "GET_VOICEMAIL";
 export const CLEAN_VOICEMAIL = "CLEAN_VOICEMAIL";
 export const POST_VOICEMAIL = "POST_VOICEMAIL";
 export const LOADING_POST = "LOADING POST";
-export const LOADING = "LOADING";
+export const SET_VOICEMAIL_ID = "SET_VOICEMAIL_ID";

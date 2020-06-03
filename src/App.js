@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 function App() {
   const classes = useStyles();
   return (
-    <div className="App" className={classes.app}>
+    <div className={classes.app}>
       <Container maxWidth="lg">
         <h1 className={classes.title}>VOICEMAIL LIST</h1>
         <VoicemailTable></VoicemailTable>

@@ -1,10 +1,10 @@
-import { GET_VOICEMAIL, CLEAN_VOICEMAIL, POST_VOICEMAIL, LOADING_POST, LOADING } from "redux/actions/types";
+import { GET_VOICEMAIL, CLEAN_VOICEMAIL, POST_VOICEMAIL, LOADING_POST, SET_VOICEMAIL_ID } from "redux/actions/types";
 const initialState = {
   data: [],
   post: false,
-  loading: "true"
+  loading: "true",
+  id: ""
 };
-
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_VOICEMAIL:
@@ -27,6 +27,11 @@ export default function (state = initialState, action) {
       return {
         data: []
       };
+    case SET_VOICEMAIL_ID:
+      return {
+        ...state,
+        id: action.id
+      }
     default:
       return state;
   }

@@ -1,9 +1,9 @@
 import React, { useEffect, Fragment, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import {
-  getVoicemail,
   cleanVoiceMail,
   patchVoicemail,
+  setVoicemailId,
 } from "redux/actions/voicemail";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -27,35 +27,41 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
   },
-  btn:{
-    marginTop: "1em"
-  }
+  btn: {
+    marginTop: "1em",
+  },
 }));
 
 export default function VoicemailTable() {
   const classes = useStyles();
   const [step, setStep] = useState(true);
+  const dispatch = useDispatch();
+  const [mailId, setMailId] = useState("");
 
-  const { voicemail, disabled, loading } = useSelector(
+  const textChange = (event) => {
+    setMailId(event.target.value);
+  };
+  //CLEAN REDUX STORE WHEN COMPONENT WILL UNMOUNT
+  useEffect(() => {
+    return () => dispatch(cleanVoiceMail());
+  }, [dispatch]);
+
+  const { voicemail, disabled } = useSelector(
     (state) => ({
       voicemail: state.voicemail,
       disabled: state.voicemail.post,
-      loading: state.voicemail.loading,
     }),
     shallowEqual
   );
 
-  const dispatch = useDispatch();
-
-  const getVoiceMail = (id) => {
-    dispatch(getVoicemail(id));
+  //SEND VOICEMAIL ID TO REDUX STORE 
+  const setVoiceMail = () => {
+    setStep(false);
+    dispatch(setVoicemailId(mailId));
   };
 
-  useEffect(() => {
-    getVoiceMail();
-    return dispatch(cleanVoiceMail());
-  }, [dispatch]);
 
+  // UPDATE STATUUS FROM VOICEMAIL
   const changeStatus = (status, row) => {
     let data = { data: {} };
     data.data.folder = status;
@@ -71,12 +77,14 @@ export default function VoicemailTable() {
             label="voicemail id"
             variant="outlined"
             className={classes.text}
+            value={mailId}
+            onChange={textChange}
           />
           <Button
             variant="contained"
             color="primary"
             onClick={() => {
-              setStep(false);
+              setVoiceMail(mailId);
             }}
           >
             Next
@@ -140,6 +148,7 @@ export default function VoicemailTable() {
             variant="contained"
             color="primary"
             onClick={() => {
+              dispatch(cleanVoiceMail());
               setStep(true);
             }}
             className={classes.btn}

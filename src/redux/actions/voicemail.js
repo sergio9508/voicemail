@@ -3,8 +3,9 @@ import {
   CLEAN_VOICEMAIL,
   POST_VOICEMAIL,
   LOADING_POST,
-  LOADING,
+  SET_VOICEMAIL_ID,
 } from "redux/actions/types";
+import {store} from "redux/store";
 
 const serverUrl = "https://sandbox.2600hz.com:8443/v2";
 const credentials =
@@ -15,10 +16,11 @@ const headers = {
   "Content-Type": "application/json",
 };
 const account_id = "4642e64040cdb8b89c310a21a07c7f62";
-const box_id = "b37675a2d7b90d60f0ee5d4175502394";
 
+//function to get all voicemail from api
 export const getVoicemail = () => (dispatch) => {
-  fetch(`${requestUrl}accounts/${account_id}/vmboxes/${box_id}/messages`, {
+  let voicemail_id = store.getState().voicemail.id;
+  fetch(`${requestUrl}accounts/${account_id}/vmboxes/${voicemail_id}/messages`, {
     headers,
   }).then((response) => {
     if (response.status === 200) {
@@ -32,12 +34,12 @@ export const getVoicemail = () => (dispatch) => {
   });
 };
 
+//function to update the status form voicemail 
 export const patchVoicemail = (body, id) => (dispatch) => {
   dispatch({ type: LOADING_POST });
-  console.log(JSON.stringify(body));
-
+  let voicemail_id = store.getState().voicemail.id;
   fetch(
-    `${requestUrl}accounts/${account_id}/vmboxes/${box_id}/messages/${id}`,
+    `${requestUrl}accounts/${account_id}/vmboxes/${voicemail_id}/messages/${id}`,
     {
       headers,
       method: "POST",
@@ -60,3 +62,11 @@ export const cleanVoiceMail = () => (dispatch) => {
     type: CLEAN_VOICEMAIL,
   });
 };
+
+export const setVoicemailId = (id) => (dispatch) =>{
+  dispatch({
+    type: SET_VOICEMAIL_ID,
+    id: id
+  });
+  dispatch(getVoicemail());
+}
