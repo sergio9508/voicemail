@@ -1,2 +1,3 @@
-##TO RUN APP USE 
-npm start
+**TO RUN APP USE**
+
+    npm start
